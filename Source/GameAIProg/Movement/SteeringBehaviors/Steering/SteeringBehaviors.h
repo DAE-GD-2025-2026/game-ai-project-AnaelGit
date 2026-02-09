@@ -26,6 +26,15 @@ protected:
 };
 
 // Your own SteeringBehaviors should follow here...
+
+// declaration order:
+// - Seek
+// - Wander
+// - Flee
+// - Arrive
+// - Evade
+// - Pursuit
+
 class Seek : public ISteeringBehavior
 {
 public:
@@ -56,6 +65,10 @@ public:
 	Arrive() = default;
 	virtual ~Arrive() override = default;
 	virtual SteeringOutput CalculateSteering(float DeltaT, ASteeringAgent& Agent) override;
+
+	const int slowRadius		{500};
+	const int targetRadius		{50};
+	float AgentMaxLinearSpeed	{  };
 };
 
 class Evade : public ISteeringBehavior
