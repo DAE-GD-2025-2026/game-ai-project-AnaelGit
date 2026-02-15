@@ -114,7 +114,7 @@ void ALevel_SteeringBehaviors::Tick(float DeltaTime)
 			ImGui::PushItemWidth(100);
 
 			// Add the names of your steering behaviors
-			if (ImGui::Combo("", &a.SelectedBehavior, "Seek\0Wander\0Flee\0Arrive\0Evade\0Pursuit", 4))
+			if (ImGui::Combo("", &a.SelectedBehavior, "Seek\0Wander\0Flee\0Arrive\0Evade\0Pursuit\0Face", 4))
 			{
 				bBehaviourModified = true;
 			}
@@ -199,7 +199,6 @@ bool ALevel_SteeringBehaviors::AddAgent(BehaviorTypes BehaviorType, bool AutoOri
 		ImGuiAgent.SelectedTarget = -1; // Mouse
 		
 		SetAgentBehavior(ImGuiAgent);
-
 		SteeringAgents.push_back(std::move(ImGuiAgent));
 		
 		RefreshTargetLabels();
@@ -242,6 +241,9 @@ void ALevel_SteeringBehaviors::SetAgentBehavior(ImGui_Agent& Agent)
 		break;
 	case BehaviorTypes::Pursuit:
 		Agent.Behavior = std::make_unique<Pursuit>();
+		break;
+	case BehaviorTypes::Face:
+		Agent.Behavior = std::make_unique<Face>();
 		break;
 	//TODO; Implement behaviors setting here
 	default:

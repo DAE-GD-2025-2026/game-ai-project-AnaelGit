@@ -2,6 +2,7 @@
 
 #include <Movement/SteeringBehaviors/SteeringHelpers.h>
 #include "Kismet/KismetMathLibrary.h"
+#include <math.h>
 
 class ASteeringAgent;
 
@@ -34,6 +35,7 @@ protected:
 // - Arrive
 // - Evade
 // - Pursuit
+// - Face
 
 class Seek : public ISteeringBehavior
 {
@@ -43,12 +45,24 @@ public:
 	virtual SteeringOutput CalculateSteering(float DeltaT, ASteeringAgent& Agent) override;
 };
 
-class Wander : public ISteeringBehavior
+class Wander : public Seek
 {
 public:
 	Wander() = default;
 	virtual ~Wander() override = default;
+
+	// Waneder Beavior
 	virtual SteeringOutput CalculateSteering(float DeltaT, ASteeringAgent& Agent) override;
+
+	void SetWanderOffset(float offset) { m_OffsetDistance = offset; }
+	void SetWanderRadius(float radius) { m_Radius = radius; }
+	void SetMaxAngleChange(float rad) { m_MaxAngleChange = rad; }
+
+protected:
+	float m_OffsetDistance = 6.f; //Offset (Agent Direction)
+	float m_Radius = 4.f; //WanderRadius
+	float m_MaxAngleChange = 45 * PI / 180;//ToRadians(45); //Max WanderAngle change per frame
+	float m_WanderAngle = 0.f; //Internal
 };
 
 class Flee : public ISteeringBehavior
@@ -84,5 +98,13 @@ class Pursuit : public ISteeringBehavior
 public:
 	Pursuit() = default;
 	virtual ~Pursuit() override = default;
+	virtual SteeringOutput CalculateSteering(float DeltaT, ASteeringAgent& Agent) override;
+};
+
+class Face : public ISteeringBehavior
+{
+public:
+	Face() = default;
+	virtual ~Face() override = default;
 	virtual SteeringOutput CalculateSteering(float DeltaT, ASteeringAgent& Agent) override;
 };
