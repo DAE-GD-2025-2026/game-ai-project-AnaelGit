@@ -33,8 +33,8 @@ protected:
 // - Wander
 // - Flee
 // - Arrive
-// - Evade
 // - Pursuit
+// - Evade
 // - Face
 
 class Seek : public ISteeringBehavior
@@ -54,18 +54,13 @@ public:
 	// Waneder Beavior
 	virtual SteeringOutput CalculateSteering(float DeltaT, ASteeringAgent& Agent) override;
 
-	void SetWanderOffset(float offset) { m_OffsetDistance = offset; }
-	void SetWanderRadius(float radius) { m_Radius = radius; }
-	void SetMaxAngleChange(float rad) { m_MaxAngleChange = rad; }
-
-protected:
-	float m_OffsetDistance = 6.f; //Offset (Agent Direction)
-	float m_Radius = 4.f; //WanderRadius
-	float m_MaxAngleChange = 45 * PI / 180;//ToRadians(45); //Max WanderAngle change per frame
-	float m_WanderAngle = 0.f; //Internal
+	float m_OffsetDistance	{ 600.f	}; // Offset (Agent Direction)
+	float m_Radius			{ 400.f	}; // WanderRadius
+	float m_MaxAngleChange	{ 45	}; // Max WanderAngle change per frame (in degrees)
+	float m_WanderAngle		{ 0.f	}; // Internal
 };
 
-class Flee : public ISteeringBehavior
+class Flee : public Seek
 {
 public:
 	Flee() = default;
@@ -73,7 +68,7 @@ public:
 	virtual SteeringOutput CalculateSteering(float DeltaT, ASteeringAgent& Agent) override;
 };
 
-class Arrive : public ISteeringBehavior
+class Arrive : public Seek
 {
 public:
 	Arrive() = default;
@@ -85,19 +80,19 @@ public:
 	float AgentMaxLinearSpeed	{  };
 };
 
-class Evade : public ISteeringBehavior
-{
-public:
-	Evade() = default;
-	virtual ~Evade() override = default;
-	virtual SteeringOutput CalculateSteering(float DeltaT, ASteeringAgent& Agent) override;
-};
-
-class Pursuit : public ISteeringBehavior
+class Pursuit : public Seek
 {
 public:
 	Pursuit() = default;
 	virtual ~Pursuit() override = default;
+	virtual SteeringOutput CalculateSteering(float DeltaT, ASteeringAgent& Agent) override;
+};
+
+class Evade : public Pursuit
+{
+public:
+	Evade() = default;
+	virtual ~Evade() override = default;
 	virtual SteeringOutput CalculateSteering(float DeltaT, ASteeringAgent& Agent) override;
 };
 
@@ -108,3 +103,4 @@ public:
 	virtual ~Face() override = default;
 	virtual SteeringOutput CalculateSteering(float DeltaT, ASteeringAgent& Agent) override;
 };
+
