@@ -121,6 +121,8 @@ SteeringOutput Evade::CalculateSteering(float DeltaT, ASteeringAgent& Agent)
 
 SteeringOutput Face::CalculateSteering(float DeltaT, ASteeringAgent& Agent)
 {
+	Agent.SetIsAutoOrienting(false);
+
 	SteeringOutput Steering{};
 
 	FVector2D vecToTarget = Target.Position - Agent.GetPosition();
