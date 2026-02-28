@@ -32,5 +32,17 @@ private:
 	bool UseMouseTarget = false;
 	bool CanDebugRender = false;
 
-	
+
+	ISteeringBehavior* m_pDrunkAgentSeek = new Seek;
+	ISteeringBehavior* m_pDrunkAgentWander = new Wander;
+	BlendedSteering* m_pDrunkAgentSteering = new BlendedSteering({ { m_pDrunkAgentSeek,0.5f },{ m_pDrunkAgentWander, 0.5f} });
+
+	ISteeringBehavior* m_pEvadingWander = new Wander;
+	ISteeringBehavior* m_pEvadingEvade = new Evade;
+	PrioritySteering* m_pEvadingSteering = new PrioritySteering({ m_pEvadingWander, m_pEvadingEvade });
+	float m_evadingRadiusSquared = 500*500; // I use SquaredLength() in the calculations
+
+	ASteeringAgent* m_pDrunkAgent = nullptr;
+	ASteeringAgent* m_pEvadingAgent = nullptr;
+
 };

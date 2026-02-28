@@ -31,6 +31,17 @@ void Flock::Tick(float DeltaTime)
   // TODO: register the neighbors for this agent (-> fill the memory pool with the neighbors for the currently evaluated agent)
   // TODO: update the agent (-> the steeringbehaviors use the neighbors in the memory pool)
   // TODO: trim the agent to the world
+
+	//int count = 0;
+	//for (auto Agent : Agents)
+	//{
+	//	++count;
+	//}
+	//if (GEngine) // make sure the engine exists
+	//{
+	//	FString Msg = FString::Printf(TEXT("agent count: %i"), count);
+	//	GEngine->AddOnScreenDebugMessage(-1, 0.f, FColor::Green, Msg);
+	//}
 }
 
 void Flock::RenderDebug()
